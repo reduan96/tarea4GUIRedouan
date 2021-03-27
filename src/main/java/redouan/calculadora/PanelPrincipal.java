@@ -104,19 +104,24 @@ public class PanelPrincipal extends JPanel implements MouseListener {
 
         } else if (e.getSource() == botonera.grupoBotones[10]) {
 
+            //Guardamos el primer conjunto de numeros como subcadena1 para luego
+            //usarla en las operaciones.
             subcadena1 = areaTexto.getText();
             areaTexto.setText(areaTexto.getText() + "+");
 
         } else if (e.getSource() == botonera.grupoBotones[11]) {
 
+            subcadena1 = areaTexto.getText();
             areaTexto.setText(areaTexto.getText() + "-");
 
         } else if (e.getSource() == botonera.grupoBotones[12]) {
 
+            subcadena1 = areaTexto.getText();
             areaTexto.setText(areaTexto.getText() + "*");
 
         } else if (e.getSource() == botonera.grupoBotones[13]) {
 
+            subcadena1 = areaTexto.getText();
             areaTexto.setText(areaTexto.getText() + "/");
 
         } else if (e.getSource() == botonera.grupoBotones[14]) {
@@ -128,7 +133,13 @@ public class PanelPrincipal extends JPanel implements MouseListener {
             //Bucles que según que operando se puso, elegirá la operación pertinente
             if (areaTexto.getText().contains("+")) {
 
+                //Sumamos las subcadenas y mostramos el resutado, haciendo casting
                 resultado = (Double.parseDouble(subcadena1) + Double.parseDouble(subcadena2));
+                areaTexto.setText(String.valueOf(resultado));
+            } else if (areaTexto.getText().contains("-")) {
+
+                //Restamos las subcadenas y mostramos el resutado, haciendo casting
+                resultado = (Double.parseDouble(subcadena1) - Double.parseDouble(subcadena2));
                 areaTexto.setText(String.valueOf(resultado));
             }
 
