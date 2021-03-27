@@ -9,6 +9,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
@@ -21,12 +22,13 @@ public class PanelPrincipal extends JPanel implements MouseListener {
     // Atributos de la clase (privados)
     private PanelBotones botonera;
     private JTextArea areaTexto;
-    private int tipoOperacion;
+    private double resultado;
+    private String subcadena1;
+    private String subcadena2;
 
     // Constructor
     public PanelPrincipal() {
         initComponents();
-        tipoOperacion = -1; // No hay operaciones en la calculadora
     }
 
     // Se inicializan los componentes gráficos y se colocan en el panel
@@ -34,7 +36,7 @@ public class PanelPrincipal extends JPanel implements MouseListener {
         // Creamos el panel de botones
         botonera = new PanelBotones();
         // Creamos el área de texto
-        areaTexto = new JTextArea(10, 50);
+        areaTexto = new JTextArea(5, 50);
         areaTexto.setEditable(false);
         areaTexto.setBackground(Color.white);
 
@@ -51,12 +53,19 @@ public class PanelPrincipal extends JPanel implements MouseListener {
         }
     }
 
+    //Al implementar la interfaz MouseListener, se deben sobreescribir todos
+    //sus métodos abstractos y darle la funcionalidad al mouseClicked que es
+    //que hará cada objeto JButton al preionarlo, en este caso, las funciones
+    //de la calculadora
     @Override
     public void mouseClicked(MouseEvent e) {
 
         if (e.getSource() == botonera.grupoBotones[0]) {
 
-            areaTexto.setText(areaTexto.getText() + "0");
+            if (!areaTexto.getText().equals("")) {
+
+                areaTexto.setText(areaTexto.getText() + "0");
+            }
 
         } else if (e.getSource() == botonera.grupoBotones[1]) {
 
@@ -96,6 +105,7 @@ public class PanelPrincipal extends JPanel implements MouseListener {
 
         } else if (e.getSource() == botonera.grupoBotones[10]) {
 
+            subcadena1 = areaTexto.getText();
             areaTexto.setText(areaTexto.getText() + "+");
 
         } else if (e.getSource() == botonera.grupoBotones[11]) {
@@ -112,19 +122,37 @@ public class PanelPrincipal extends JPanel implements MouseListener {
 
         } else if (e.getSource() == botonera.grupoBotones[14]) {
 
+            //AL CAMBIAR EL NUMERO DEL SUBSTRING PUEDO HACER LAS OPERACIONES
+            //CON MAS DIGITOS(????????) PREGUNTAR VICO********
+            //Ahora opera a 7 dígitos máximos por cada operando
+            subcadena2 = areaTexto.getText().substring(7, areaTexto.getText().length());
             areaTexto.setText(areaTexto.getText() + "=");
+            //Bucles que según que operando se puso, elegirá la operación pertinente
+            if (areaTexto.getText().contains("+")) {
+
+                //Si te pasas de los 7 digitos por operando, salta un mensaje 
+                //avisandote del erorr
+                try{
+                resultado = (Double.parseDouble(subcadena1) + Double.parseDouble(subcadena2));
+                areaTexto.setText(String.valueOf(resultado));
+                }catch(NumberFormatException nfe){
+                    
+                    JOptionPane.showMessageDialog(null, "Error, Máximo 7 digitos por operando");
+                }
+            }
 
         } else if (e.getSource() == botonera.grupoBotones[15]) {
 
-            if(areaTexto.getText().length() > 0){
-                
-                String subcadena = areaTexto.getText().substring(0, areaTexto.getText().length()-1);
+            if (areaTexto.getText().length() > 0) {
+
+                String subcadena = areaTexto.getText().substring(0, areaTexto.getText().length() - 1);
                 areaTexto.setText(subcadena);
             }
 
         }
     }
 
+    //Estos métodos se sobreescriben en vacio ya que no los necesitamos por ahora
     @Override
     public void mousePressed(MouseEvent e) {
 
