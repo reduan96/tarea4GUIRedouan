@@ -9,6 +9,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
@@ -141,15 +142,31 @@ public class PanelPrincipal extends JPanel implements MouseListener {
                 //Restamos las subcadenas y mostramos el resutado, haciendo casting
                 resultado = (Double.parseDouble(subcadena1) - Double.parseDouble(subcadena2));
                 areaTexto.setText(String.valueOf(resultado));
+            } else if (areaTexto.getText().contains("*")) {
+
+                //Multiplicamos las subcadenas y mostramos el resutado, haciendo casting
+                resultado = (Double.parseDouble(subcadena1) * Double.parseDouble(subcadena2));
+                areaTexto.setText(String.valueOf(resultado));
+            } else {
+
+                //Como no se puede dividir entre 0, ya que es infinito, hacemos el
+                //siguiente algoritmo para evitarlo
+                if (subcadena2.equals("0")) {
+
+                    JOptionPane.showMessageDialog(null, "No se puede dividir entre 0,"
+                            + " ya que dá infinito");
+                } else {
+
+                    //Dividimos las subcadenas y mostramos el resutado, haciendo casting
+                    resultado = (Double.parseDouble(subcadena1) / Double.parseDouble(subcadena2));
+                    areaTexto.setText(String.valueOf(resultado));
+                }
             }
 
+            //Al darle al botón de borrar, se borrará todo
         } else if (e.getSource() == botonera.grupoBotones[15]) {
 
-            if (areaTexto.getText().length() > 0) {
-
-                String subcadena = areaTexto.getText().substring(0, areaTexto.getText().length() - 1);
-                areaTexto.setText(subcadena);
-            }
+            areaTexto.setText("");
 
         }
     }
