@@ -9,7 +9,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
@@ -122,23 +121,15 @@ public class PanelPrincipal extends JPanel implements MouseListener {
 
         } else if (e.getSource() == botonera.grupoBotones[14]) {
 
-            //AL CAMBIAR EL NUMERO DEL SUBSTRING PUEDO HACER LAS OPERACIONES
-            //CON MAS DIGITOS(????????) PREGUNTAR VICO********
-            //Ahora opera a 7 dígitos máximos por cada operando
-            subcadena2 = areaTexto.getText().substring(7, areaTexto.getText().length());
+            //Para coger la subcadena2, le restamos la subcadena1 + 1 que es el 
+            //caracter que indica el operando
+            subcadena2 = areaTexto.getText().substring(subcadena1.length() + 1);
             areaTexto.setText(areaTexto.getText() + "=");
             //Bucles que según que operando se puso, elegirá la operación pertinente
             if (areaTexto.getText().contains("+")) {
 
-                //Si te pasas de los 7 digitos por operando, salta un mensaje 
-                //avisandote del erorr
-                try{
                 resultado = (Double.parseDouble(subcadena1) + Double.parseDouble(subcadena2));
                 areaTexto.setText(String.valueOf(resultado));
-                }catch(NumberFormatException nfe){
-                    
-                    JOptionPane.showMessageDialog(null, "Error, Máximo 7 digitos por operando");
-                }
             }
 
         } else if (e.getSource() == botonera.grupoBotones[15]) {
